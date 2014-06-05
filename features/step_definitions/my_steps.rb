@@ -24,3 +24,22 @@ Then(/^they get results about "([^"]*)"$/) do |search_results|
   sresults = @Browser.span(:class=>"grid-product-name").text.include? search_results
   assert(sresults == true)
 end
+
+
+Given(/^someone goes guitarcenter website$/) do
+  @Browser = Watir::Browser.new :ff
+  @Browser.goto "guitarcenter.com"
+end
+
+When(/^click on log in$/) do
+  @Browser.div(:id=> "headerContentContainer").wait_until_present
+  @Browser.link(:text=> "Login").click
+end
+
+Then(/^they get redirected to log in page$/) do
+  #@Browser.div(:class=> "gcLogo").wait_until_present
+ sresults = @Browser.label(:for=>"Email").exists?
+  assert(sresults == true)
+  sresults = @Browser.label(:for=>"Password").exists?
+  assert(sresults == true)
+end
