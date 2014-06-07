@@ -43,3 +43,21 @@ Then(/^they get redirected to log in page$/) do
   sresults = @Browser.label(:for=>"Password").exists?
   assert(sresults == true)
 end
+
+
+Given(/^someone goes to guitarcenter website$/) do
+  @Browser = Watir::Browser.new :ff
+  @Browser.goto "guitarcenter.com"
+end
+
+When(/^click on store finder a pop up window opens to input zipcode, you input "([^"]*)"$/) do |zipcode|
+  @Browser.link(:text=>"Store Finder").click
+  @Browser.text_field(:id=>"sszipCode").wait_until_present
+  @Browser.text_field(:id=>"sszipCode").set "#{zipcode}"
+  @Browser.input(:id=>"storeSearchButton").click
+end
+
+Then(/^you get results of stores by distance starting with the closest$/) do
+  @Browser.link(:text=>"Make My Home Store").wait_until_present
+  @Browser.link(:text=>"(San Bernardino (6.75 mi))").exists?
+end
