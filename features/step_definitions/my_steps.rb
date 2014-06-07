@@ -58,6 +58,10 @@ When(/^click on store finder a pop up window opens to input zipcode, you input "
 end
 
 Then(/^you get results of stores by distance starting with the closest$/) do
+  store_location = @Browser.ul(:id=>"searchResultList").div.a.text
+  puts store_location
+
+
   @Browser.link(:text=>"Make My Home Store").wait_until_present
   @Browser.link(:text=>"(San Bernardino (6.75 mi))").exists?
 end
