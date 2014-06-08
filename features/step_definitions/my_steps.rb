@@ -58,9 +58,13 @@ When(/^click on store finder a pop up window opens to input zipcode, you input "
 end
 
 Then(/^you get results of stores by distance starting with the closest$/) do
+  @Browser.ul(:id=>"searchResultList").wait_until_present
+  #I'm defining a variable called store_location to equal the text of the first store in the list
   store_location = @Browser.ul(:id=>"searchResultList").div.a.text
   puts store_location
-
+  #I'm defining a variable called miles, to be the regex of getting a number.numbernumber
+  miles_of_first_store = /([0-9]).([0-9])([0-9])/.match(store_location)
+  puts miles_of_first_store
 
   @Browser.link(:text=>"Make My Home Store").wait_until_present
   @Browser.link(:text=>"(San Bernardino (6.75 mi))").exists?
