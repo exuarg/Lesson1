@@ -63,17 +63,17 @@ Then(/^you get results of stores by distance starting with the closest$/) do
   store_location = @Browser.ul(:id=>"searchResultList").li(:index=>0).div.a.text
  # puts store_location
   #I'm defining a variable called miles, to be the regex of getting a number.numbernumber
-  miles_of_first_store = /([0-9]).([0-9])([0-9])/.match(store_location)
+  miles_of_first_store = /(-?(0|([1-9]\d*))(\.\d+)?)/.match(store_location)
   #puts miles_of_first_store
   second_store_location = @Browser.ul(:id=>"searchResultList").li(:index=>1).div.a.text
-  miles_of_second_store = /([0-9]).([0-9])([0-9])/.match(second_store_location)
+  miles_of_second_store = /-?(0|([1-9]\d*))(\.\d+)?/.match(second_store_location)
   first_store_string = "#{miles_of_first_store}"
   second_store_string = "#{miles_of_second_store}"
   puts miles_of_first_store
   puts miles_of_second_store
   puts first_store_string.to_f
   puts second_store_string.to_f
-  assert first_store_string.to_f < second_store_string.to_f
+  assert first_store_string.to_f <= second_store_string.to_f
   puts "miles of second store: #{miles_of_second_store}"
   @Browser.link(:text=>"Make My Home Store").wait_until_present
   # @Browser.link(:text=>"(San Bernardino (6.75 mi))").exists?
