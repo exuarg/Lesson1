@@ -14,7 +14,7 @@ Feature: web automation
     Then they get redirected to log in page
 
   Scenario Outline: as a user i can go guitarcenter.com, i can find stores by distance starting with closest depending on zip code.
-    Given someone goes to guitarcenter website
+    Given someone goes to Before do guitarcenter website
     When click on store finder a pop up window opens to input zipcode, you input "<zipcode>"
     Then you get results of stores by distance starting with the closest
   Examples:
@@ -23,4 +23,10 @@ Feature: web automation
     | 75034   |
     | 20879   |
     | 66225   |
+
+  Scenario: As an user i can go to amazon.com enter the china store, and validate website its in chinese.
+    Given user goes to amazon.com
+    When click on china store website redirects to amazon china
+    Then user is able to see website in chinese
+
 

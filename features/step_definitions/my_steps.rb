@@ -1,5 +1,4 @@
 Given(/^user goes to guitarcenter/) do
-  @Browser= Watir::Browser.new :ff
   @Browser.goto "guitarcenter.com/Home"
 end
 
@@ -10,7 +9,6 @@ Then(/^the web side loads$/) do
 end
 
 Given(/^someone goes to guitarcenters website$/) do
-  @Browser = Watir::Browser.new :ff
   @Browser.goto "www.guitarcenter.com"
 end
 
@@ -27,7 +25,6 @@ end
 
 
 Given(/^someone goes guitarcenter website$/) do
-  @Browser = Watir::Browser.new :ff
   @Browser.goto "guitarcenter.com"
 end
 
@@ -46,7 +43,6 @@ end
 
 
 Given(/^someone goes to guitarcenter website$/) do
-  @Browser = Watir::Browser.new :ff
   @Browser.goto "guitarcenter.com"
 end
 
@@ -77,4 +73,35 @@ Then(/^you get results of stores by distance starting with the closest$/) do
   puts "miles of second store: #{miles_of_second_store}"
   @Browser.link(:text=>"Make My Home Store").wait_until_present
   # @Browser.link(:text=>"(San Bernardino (6.75 mi))").exists?
+end
+
+Given(/^user goes to amazon\.com$/) do
+  @Browser.goto "amazon.com"
+
+end
+
+When(/^click on china store website redirects to amazon china$/) do
+  @Browser.div(:id=>"navFooter").wait_until_present
+  @Browser.link(:text=>"China").click
+  @Browser.div(:id=>"nav-cross-shop-content").wait_until_present
+
+end
+
+Then(/^user is able to see website in chinese$/) do
+  word = @Browser.input(:class=>"nav-submit-input").title
+  puts word
+  word_string = "#{word}"
+  puts word_string
+ # @Browser = Watir::Browser.new :ff
+  @Browser.goto "google.com"
+  @Browser.a(:class =>"gb_y gb_Ca").click
+  @Browser.a(:class=>"gb_C gb_Sb").click
+  @Browser.ul(:class=>"gb_B gb_w").wait_until_present
+  @Browser.ul(:class=>"gb_B gb_w").li(:index=>0).a.click
+  @Browser.a(:id=>"gt-appname").wait_until_present
+  @Browser.text_field(:id=>"source").set "#{word_string}"
+
+  @Browser.div(:text=>"Detect language").wait_while_present
+  lenguange = @Browser.div(:class=>"goog-inline-block jfk-button jfk-button-standard jfk-button-collapse-left jfk-button-collapse-right jfk-button-checked").text
+  puts lenguange
 end
